@@ -5,6 +5,9 @@ from datetime import datetime
 start = 900
 end = 2100
 
+zones = {"Ansys" : 1, "Scaife" : 1, "Scott" : 2, "Hammerschlag" : 2, "Wean" : 2, "Doherty" : 2, "Gates" : 3, "Newell" : 3, 
+"Porter" : 4, "Baker" : 4, "CUC" : 5, "Maggie Mo" : 5, "Posner" : 5, "Tepper" : 6}
+
 class Schedule:
   def __init__(self):
     self.list_of_classes = []
@@ -103,6 +106,27 @@ def find_busy_by_day(schedule):
       for day in event.days:
          (d[day]).append([int(convert_timestamp(event.start)), int(convert_timestamp(event.end))])
    return d
+
+def find_start_zones_codes(schedule, d):
+   for event in schedule.list_of_classes:
+      for day in event.days:
+         if int(convert_timestamp(event.start)) not in d[day]:
+             (d[day])[int(convert_timestamp(event.start))] = []
+             (d[day])[int(convert_timestamp(event.start))].append(zones[event.location])
+         if (zones[event.location]) not in (d[day])[int(convert_timestamp(event.start))]:
+            (d[day])[int(convert_timestamp(event.start))].append(zones[event.location])
+   return d
+
+def find_end_zones_codes(schedule, d):
+   for event in schedule.list_of_classes:
+      for day in event.days:
+         if int(convert_timestamp(event.end)) not in d[day]:
+             (d[day])[int(convert_timestamp(event.end))] = []
+             (d[day])[int(convert_timestamp(event.end))].append(zones[event.location])
+         if (zones[event.location]) not in (d[day])[int(convert_timestamp(event.end))]:
+            (d[day])[int(convert_timestamp(event.end))].append(zones[event.location])
+   return d
+
      
 def find_free_intervals(map, start_time, end_time):
     for key in map:
@@ -116,11 +140,7 @@ def find_free_intervals(map, start_time, end_time):
             current_time = max(current_time, interval[1])
         if current_time < end_time:
             free_intervals.append((current_time, end_time))
-        final_intervals = []
-        for times in free_intervals:
-           if not ((times[1] - times[0] == 10) or (times[1] - times[0] == 50 and (times[1] % 100 == 0) and (times[0] % 100 == 50))):
-              final_intervals.append(times)
-        map[key] = final_intervals
+        map[key] = free_intervals
     return map
 
 def find_available_times(map1, map2, start, end):
@@ -142,18 +162,32 @@ def find_available_times(map1, map2, start, end):
         result_map[key] = sorted(final_intervals)
     return result_map
 
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 1:
         print("Usage: python process_ics.py <path_to_ics_file>")
     else:
         free_times = []
+        start_map = {"Monday" : {}, "Tuesday" : {}, "Wednesday" : {}, "Thursday" : {}, "Friday" : {}}
+        end_map = {"Monday" : {}, "Tuesday" : {}, "Wednesday" : {}, "Thursday" : {}, "Friday" : {}}
         for i in range (1, len(sys.argv)):
             schedule = process_ics_file(sys.argv[i])
             busy_times = find_busy_by_day(schedule)
+            start_map = find_start_zones_codes(schedule, start_map)
+            end_map = find_end_zones_codes(schedule, end_map)
             free_times.append(find_free_intervals(busy_times, start, end))
         range = free_times[0]
         for elem in free_times:
             range = find_available_times(range, elem, start, end)
-        print(range)
-
-    
+        return_map = {}
+        for day in range:
+           return_map[day] = []
+           intervals = range[day]
+           for start,end in intervals:
+              end_locs = end_map.get(day, []).get(start, [])
+              start_locs = start_map.get(day, []).get(end, [])
+              merged = end_locs + start_locs
+              merged = set(merged)
+              return_map[day].append((start, end, merged))
+        print(return_map)
