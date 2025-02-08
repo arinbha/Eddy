@@ -6,7 +6,7 @@ info:
 paths:
   /search:
     get:
-      operationId: flaskserver.test1
+      operationId: flaskserver.search
       summary: Search for study rooms
       parameters:
         - in: query
@@ -35,7 +35,7 @@ paths:
                   example: "GHC 6 Commons"
   /login:
     post:
-      operationId: flaskserver.test2
+      operationId: flaskserver.login
       summary: Logs in and returns user object
       requestBody:
         description: username/pass
@@ -61,7 +61,7 @@ paths:
 
   /newuser:
     post:
-      operationId: flaskserver.test3
+      operationId: flaskserver.newuser
       summary: Creates new user
       requestBody:
         description: username/pass
@@ -87,7 +87,7 @@ paths:
 
   /users/{userId}:
     get:
-      operationId: flaskserver.test4
+      operationId: flaskserver.userId
       summary: Gets the current user
       responses:
         '200':
