@@ -1,3 +1,5 @@
+import json
+
 zones = {"Ansys" : 1, "Scaife" : 1, "Scott" : 2, "Hammerschlag" : 2, "Wean" : 2, "Doherty" : 2, "Gates" : 3, "Newell" : 3, 
 "Tepper" : 4, "Porter" : 5, "Baker" : 5, "CUC" : 6, "Maggie Mo" : 6, "Posner" : 6}
 
@@ -41,10 +43,12 @@ class StudySpaceList:
         pass
 
 class User:
-    def _init__(self, id, username, password):
+    def __init__(self, id, username, password):
         self.id = id
         self.username = username
         self.password = password
+    def to_json(self):
+        return json.dumps(self.__dict__)
 
 
 class Group:
