@@ -3,20 +3,25 @@ import json
 zones = {"Ansys" : 1, "Scaife" : 1, "Scott" : 2, "Hammerschlag" : 2, "Wean" : 2, "Doherty" : 2, "Gates" : 3, "Newell" : 3, 
 "Tepper" : 4, "Porter" : 5, "Baker" : 5, "CUC" : 6, "Maggie Mo" : 6, "Posner" : 6}
 
+places = {"Gates 6" : "Gates", "Gates 5" : "Gates", "Gates 4" : "Gates", "Gates 3" : "Gates", "Gates 2" : "Gates", 
+          "Gates 1" : "Gates", "Gates 7" : "Gates", "Baker 5" : "Baker", "Tepper 4" : "Tepper",
+          "Scaife 1" : "Scaife", "Baker 1" : "Baker", "Maggie Mo 1": "Maggie Mo", "Scott 5" : "Scott", "Newell 3" : "Newell"}
+
 seating_type = {0: "Couches", 1 : "Tables", 2: "Both"}
 levels = {0: "Low", 1: "Medium", 2: "High"}
 
 class StudySpace:
-    def __init__(self, location, seat, capacity, noise, foot_traffic, crowdedness):
-        self.location = location
-        self.opcode = zones[location]
-        self.seating_type = seating_type[seat]
+    def __init__(self, loc, seat, capacity, noise, foot_traffic, crowdedness):
+        self.overall = loc
+        self.location = places[str(loc)]
+        self.opcode = zones[str(places[loc])]
+        self.seating_type = seat
         self.capacity = capacity
         self.noise = noise
         self.foot_traffic = foot_traffic
         self.crowdedness = crowdedness
-    def get_noise(self):
-        return self.location
+    def get_overall(self):
+        return self.overall
     def get_seatingtype(self):
         return self.seating_type
     def get_capacity(self):
@@ -33,14 +38,19 @@ class StudySpace:
         self.foot_traffic = foot_traffic
     def update_crowdedness(self, crowdedness):
         self.crowdedness = crowdedness
+    def print_study_space(self):
+        print(self.overall)
 
 class StudySpaceList:
     def __init__(self):
         self.study_spaces = []
     def add_studyspace(self, study_space):
-        self.study_spaces.append(study_space)
+        (self.study_spaces).append(study_space)
     def update_list(self, reports):
         pass
+    def print_list(self):
+        for space in self.study_spaces:
+            space.print_study_space()
 
 class User:
     def __init__(self, id, username, password):
@@ -94,6 +104,3 @@ class Availability_Map:
 class Availability_ListByDay:
     def __init__(self, dailyfree):
         self.dailyfree = dailyfree
-
-
-Gates_6 = StudySpace("Gates", 2, 20, "Loud", "High", "High")
