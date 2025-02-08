@@ -2,6 +2,7 @@ zones = {"Ansys" : 1, "Scaife" : 1, "Scott" : 2, "Hammerschlag" : 2, "Wean" : 2,
 "Porter" : 4, "Baker" : 4, "CUC" : 5, "Maggie Mo" : 5, "Posner" : 5, "Tepper" : 6}
 
 seating_type = {0: "Couches", 1 : "Tables", 2: "Both"}
+levels = {0: "Low", 1: "Medium", 2: "High"}
 
 class StudySpace:
     def __init__(self, location, seat, capacity, noise, foot_traffic, crowdedness):
