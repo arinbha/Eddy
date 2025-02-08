@@ -1,11 +1,26 @@
+import sqlite3
 from typing import Optional
 
 from backend.calprocessor import Schedule
 from models import *
 
 
+conn: Optional[sqlite3.Connection] = None
+
+
+def init_db():
+    global conn
+    conn = sqlite3.connect('db.sqlite')
+
+
 def login(user, password) -> Optional[User]:
-    pass
+    res = conn.execute("SELECT * FROM users WHERE username = ? AND password = ?", (user, password))
+    res = res.fetchone()
+
+    if res is None:
+        return None
+
+    return User(res[0], res[1], "")
 
 
 def new_user(user, password) -> User:

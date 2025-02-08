@@ -65,15 +65,16 @@ class Prefs:
         self.crowdedness = crowdedness
 
 class RoomStatus:
-    def __init__(self):
-        # TODO
-        pass
+    def __init__(self, study_space, ppl_count, noise, foot_traffic, crowdedness):
+        self.study_space = study_space
+        self.ppl_count = ppl_count
+        self.noise = noise
+        self.foot_traffic = foot_traffic
+        self.crowdedness = crowdedness
 
 class ReportList:
-    def __init__(self):
-        # TODO
-        pass
-
+    def __init__(self, reports: list[tuple[int, RoomStatus]]):
+        self.reports = reports
 
 
 class StudyEvent:

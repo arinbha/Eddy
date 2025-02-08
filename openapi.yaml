@@ -2,8 +2,6 @@ openapi: 3.0.3
 info:
   title: Eddy API
   version: 1.0.0
-paths:
-  # TODO - add paths
 
 paths:
   /search:
