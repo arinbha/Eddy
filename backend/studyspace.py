@@ -38,4 +38,17 @@ class StudySpaceList:
     def add_studyspace(self, study_space):
         self.study_spaces.append(study_space)
 
+
+class User:
+    def _init__(self, username, password):
+        self.username = username
+        self.password = password
+    def reset_password(self, password):
+        self.password = password
+
+class UserList:
+    def __init__(self):
+        self.user_list = []
+ 
+
 Gates_6 = StudySpace("Gates", 2, 20, "Loud", "High", "High")
