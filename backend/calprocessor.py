@@ -2,6 +2,9 @@ from ics import Calendar
 import sys
 from datetime import datetime
 
+start = 900
+end = 2100
+
 class Schedule:
   def __init__(self):
     self.list_of_classes = []
@@ -37,8 +40,9 @@ class Event:
     print(self.end)
 
 def read_location(location):
-   d = {'PH': "Porter Hall", 'BH' : "Baker Hall", 'POS': "Posner Hall", 
-        'GHC' : "Gates Hillman Center", 'DH' : "Doherty Hall", 'HH' : "Hammerschlag Hall"}
+   d = {'PH': "Porter", 'BH' : "Baker", 'POS': "Posner", 
+        'GHC' : "Gates", 'DH' : "Doherty", 'HH' : "Hammerschlag",
+        'WEH' : "Wean", 'MM' : "Maggie Mo", 'TEP': "Tepper"}
    s = location.split('-')
    return d[s[0]]
 
@@ -87,10 +91,69 @@ def process_ics_file(file_path):
         classevent.add_start(begin)
         classevent.add_end(end)
         schedule.join(classevent)
-    print_schedule(schedule)
+    return schedule
+
+
+def convert_timestamp(timestamp):
+    return datetime.strptime(timestamp, "%I:%M %p").strftime("%H%M")
+
+def find_busy_by_day(schedule):
+   d = {"Monday" : [], "Tuesday" : [], "Wednesday" : [], "Thursday" : [], "Friday" : []}
+   for event in schedule.list_of_classes:
+      for day in event.days:
+         (d[day]).append([int(convert_timestamp(event.start)), int(convert_timestamp(event.end))])
+   return d
+     
+def find_free_intervals(map, start_time, end_time):
+    for key in map:
+        intervals = map[key]
+        intervals.sort()
+        free_intervals = []
+        current_time = start_time
+        for interval in intervals:
+            if interval[0] > current_time:
+                free_intervals.append((current_time, interval[0]))
+            current_time = max(current_time, interval[1])
+        if current_time < end_time:
+            free_intervals.append((current_time, end_time))
+        final_intervals = []
+        for times in free_intervals:
+           if not ((times[1] - times[0] == 10) or (times[1] - times[0] == 50 and (times[1] % 100 == 0) and (times[0] % 100 == 50))):
+              final_intervals.append(times)
+        map[key] = final_intervals
+    return map
+
+def find_available_times(map1, map2, start, end):
+    result_map = {}
+    for key in map1:
+        free_times_1 = map1[key]
+        free_times_2 = map2[key]
+        result = []
+        for start1, end1 in free_times_1:
+            for start2, end2 in free_times_2:
+                overlap_start = max(start1, start2)
+                overlap_end = min(end1, end2)
+                if overlap_start < overlap_end:
+                    result.append((overlap_start, overlap_end))
+        final_intervals = []
+        for times in result:
+           if not ((times[1] - times[0] == 10) or (times[1] - times[0] == 50 and (times[1] % 100 == 0) and (times[0] % 100 == 50))):
+              final_intervals.append(times)
+        result_map[key] = sorted(final_intervals)
+    return result_map
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
+    if len(sys.argv) < 1:
         print("Usage: python process_ics.py <path_to_ics_file>")
     else:
-        process_ics_file(sys.argv[1])
+        free_times = []
+        for i in range (1, len(sys.argv)):
+            schedule = process_ics_file(sys.argv[i])
+            busy_times = find_busy_by_day(schedule)
+            free_times.append(find_free_intervals(busy_times, start, end))
+        range = free_times[0]
+        for elem in free_times:
+            range = find_available_times(range, elem, start, end)
+        print(range)
+
+    
