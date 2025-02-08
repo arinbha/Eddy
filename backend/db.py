@@ -189,3 +189,5 @@ def search(availability, pref, spaces) -> StudySpaceList:
 
 def update_status(space: StudySpace):
     pass
+
+
