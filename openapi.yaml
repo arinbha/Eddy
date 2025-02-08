@@ -1,0 +1,404 @@
+openapi: 3.0.3
+info:
+  title: Eddy API
+  version: 1.0.0
+paths:
+  # TODO - add paths
+  /login:
+    post:
+      summary: Logs in and returns user object
+      requestBody:
+        description: username/pass
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: User object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+        401:
+          description: Bad Login
+
+  /newuser:
+    post:
+      summary: Creates new user
+      requestBody:
+        description: username/pass
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+
+      responses:
+        200:
+          description: User object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+
+
+  /users/{userId}:
+    get:
+      summary: Gets the current user
+      responses:
+        '200':
+          description: Returns the current user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/{userId}/groups:
+    get:
+      summary: Gets list of groups user is in
+      responses:
+        '200':
+          description: Returns lists of groups
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+
+  /users/{userId}/groups/new:
+    post:
+      summary: Creates a new group for the user
+      requestBody:
+        description: Preferences for new group
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Prefs'
+
+      responses:
+        '200':
+          description: Returns new group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+
+  /users/{userId}/groups/{groupId}:
+    post:
+      summary: Updates preferences for the group
+      requestBody:
+        description: New preferences for the group
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Prefs'
+
+      responses:
+        '200':
+          description: Returns new group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+
+    delete:
+      summary: Removes user from group
+      requestBody:
+        description: The group to remove
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '200':
+          description: Successful deletion
+
+  /users/{userId}/groups/join:
+    post:
+      summary: Adds user to a group
+      requestBody:
+        description: Group ID
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int64
+              example: 20
+      responses:
+        '200':
+          description: Successful add
+
+
+  /user/{userId}/prefs:
+    post:
+      summary: Update user prefs
+      requestBody:
+        description: New Prefs
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Prefs'
+      responses:
+        '200':
+          description: Returns new prefs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Prefs'
+
+    get:
+        summary: Get user prefs
+        responses:
+          '200':
+            description: Returns user prefs
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Prefs'
+
+
+  /users/{userId}/schedule:
+      get:
+          summary: Get user schedule
+          responses:
+            '200':
+              description: Returns user schedule
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Schedule'
+
+      post:
+          summary: Update user schedule
+          requestBody:
+              description: New schedule
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Schedule'
+          responses:
+              '200':
+                description: Returns new schedule
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/Schedule'
+
+
+  /users/{userId}/next_event:
+        get:
+            summary: Gets next planned study event
+            responses:
+              '200':
+                description: Returns next study event
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        start_time:
+                          type: string
+                          description: 24 hour HH:MM time
+                          pattern: '\d\d:\d\d'
+                          example: '09:30'
+                        end_time:
+                          type: string
+                          description: 24 hour HH:MM time
+                          pattern: '\d\d:\d\d'
+                          example: '16:30'
+                        location:
+                          type: string
+                          example: "GHC 6 Commons"
+
+
+  /search:
+    get:
+        summary: Search for study rooms
+        parameters:
+          - in: query
+            name: prefs
+            schema:
+              type: object
+              properties:
+                prefs:
+                  $ref: '#/components/schemas/Prefs'
+                id:
+                  type: integer
+                  format: int64
+                  example: 10
+                is_group:
+                  type: boolean
+                  example: false
+        responses:
+            '200':
+                description: Returns list of rooms
+                content:
+                  application/json:
+                    schema:
+                      type: array
+                      items:
+                          type: string
+                          example: "GHC 6 Commons"
+
+
+  /book:
+    post:
+        summary: Books a room
+        requestBody:
+            description: Room to book
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    room:
+                      type: string
+                      example: "GHC 6 Commons"
+                    id:
+                      type: integer
+                      format: int64
+                      example: 10
+                    is_group:
+                      type: boolean
+                      example: false
+                    start_time:
+                      type: string
+                      description: 24 hour HH:MM time
+                      pattern: '\d\d:\d\d'
+                      example: '09:30'
+                    end_time:
+                      type: string
+                      description: 24 hour HH:MM time
+                      pattern: '\d\d:\d\d'
+                      example: '16:30'
+        responses:
+            '200':
+                description: Returns success
+                content:
+                  application/json:
+                    schema:
+                      type: string
+                      example: "Success"
+
+  /update_status:
+    post:
+        summary: Updates room status
+        requestBody:
+            description: Room to update
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    room:
+                      type: string
+                      example: "GHC 6 Commons"
+                    status:
+                      $ref: '#/components/schemas/RoomStatus'
+        responses:
+            '200':
+                description: Returns success
+                content:
+                  application/json:
+                    schema:
+                      type: string
+                      example: "Success"
+
+
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        username:
+          type: string
+        preferences:
+          $ref: '#/components/schemas/Prefs'
+
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 20
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        preferences:
+          $ref: '#/components/schemas/Prefs'
+
+
+    Prefs:
+      type: object
+      properties:
+        start_time:
+          type: integer
+          description: The 24-hour number for start time
+          format: int64
+          example: 9
+
+        end_time:
+          type: integer
+          description: The 24-hour number for end time
+          format: int64
+          example: 17
+
+        # TODO Room Prefs
+
+    RoomStatus:
+      type: object
+      properties:
+        # TODO
+
+    Location:
+      type: string
+      example: "Scaife"
+
+    Event:
+      type: object
+      properties:
+        name:
+          type: string
+        days:
+          type: array
+          items:
+            type: string
+            example: "Monday"
+        location:
+          $ref: '#/components/schemas/Location'
+        start:
+          type: string
+          description: 24 hour HH:MM time
+          pattern: '\d\d:\d\d'
+          example: '09:30'
+        end:
+          type: string
+          description: 24 hour HH:MM time
+          pattern: '\d\d:\d\d'
+          example: '16:30'
+
+    Schedule:
+      type: array
+      items:
+        $ref: '#/components/schemas/Event'
