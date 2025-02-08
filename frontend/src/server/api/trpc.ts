@@ -9,6 +9,8 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
+import OpenAPIClientAxios from "openapi-client-axios";
+import type { Client } from "openapi.d.ts";
 
 import { auth } from "~/server/auth";
 
@@ -26,9 +28,15 @@ import { auth } from "~/server/auth";
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   const session = await auth();
+  // const api = new OpenAPIClientAxios({
+  //   definition: "https://localhost:8080/api/openapi.json",
+  // });
+
+  // const client = await api.getClient<Client>();
 
   return {
     session,
+    // client,
     ...opts,
   };
 };

@@ -10,10 +10,10 @@ export const calendarRouter = createTRPCRouter({
   import: publicProcedure
     .input(
       z.object({
-        file: z.custom<File>(),
+        file: z.string(),
       }),
     )
     .mutation(({ ctx, input }) => {
-      input.file;
+      await
     }),
 });
