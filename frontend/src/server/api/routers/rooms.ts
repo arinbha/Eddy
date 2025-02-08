@@ -7,13 +7,24 @@ import {
 } from "~/server/api/trpc";
 
 export const roomsRouter = createTRPCRouter({
-  search: publicProcedure.query(async ({ ctx }) => {
+  search: publicProcedure.input(
+    z.object({
+      prefs: z.string(),
+    }),
+  ).query(async ({ ctx , input }) => {
     // const { data } = await ctx.client.get("https://localhost:8080/search");
-    const data = ["GHC Commons 6", "Next Study Space", "Hunt Libarary Studio A"]
+    // const data = ["GHC Commons 6", "Next Study Space", "Hunt Libarary Studio A"]
+
+
+    const res = await ctx.client.get('/search', {
+      params: {
+        prefs: input.prefs
+      }
+    });
 
     const schema = z.string().array();
 
-    const result = await schema.safeParseAsync(data);
+    const result = await schema.safeParseAsync(res.data);
 
     if (result.success) 
       return result.data;

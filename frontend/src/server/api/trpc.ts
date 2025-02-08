@@ -13,6 +13,7 @@ import OpenAPIClientAxios from "openapi-client-axios";
 import type { Client } from "openapi.d.ts";
 
 import { auth } from "~/server/auth";
+import axios from "axios";
 
 /**
  * 1. CONTEXT
@@ -32,11 +33,14 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
   //   definition: "https://localhost:8080/api/openapi.json",
   // });
 
-  // const client = await api.getClient<Client>();
+  const client = axios.create({
+    baseURL: 'https://some-domain.com/api/',
+    timeout: 1000
+  });
 
   return {
     session,
-    // client,
+    client,
     ...opts,
   };
 };
