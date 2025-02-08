@@ -55,9 +55,14 @@ class Group:
 
 
 class Prefs:
-    def __init__(self):
-        # TODO
-        pass
+    def __init__(self, seating_type, size, start_time, end_time, noise, foot_traffic, crowdedness):
+        self.seating_type = seating_type
+        self.size = size
+        self.start_time = start_time
+        self.end_time = end_time
+        self.noise = noise
+        self.foot_traffic = foot_traffic
+        self.crowdedness = crowdedness
 
 class RoomStatus:
     def __init__(self):
