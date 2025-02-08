@@ -66,5 +66,13 @@ class StudyEvent:
         self.start_time = start_time
         self.end_time = end_time
 
+class Availability_Map:
+    def __init__(self, availability):
+        self.availability = availability
+
+class Availability_ListByDay:
+    def __init__(self, dailyfree):
+        self.dailyfree = dailyfree
+
 
 Gates_6 = StudySpace("Gates", 2, 20, "Loud", "High", "High")

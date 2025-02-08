@@ -44,7 +44,7 @@ def user_next_event(user_id: int) -> StudyEvent:
     pass
 
 
-def search(pref: Prefs, id: int, is_group: bool) -> StudySpaceList:
+def search(availability: Availability_ListByDay, pref: Prefs, id: int, is_group: bool) -> StudySpaceList:
     pass
 
 
