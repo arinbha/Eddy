@@ -73,9 +73,8 @@ class RoomStatus:
         self.crowdedness = crowdedness
 
 class ReportList:
-    def __init__(self, timestamp, status):
-        self.timestamp = timestamp
-        self.status = status
+    def __init__(self, reports: list[tuple[int, RoomStatus]]):
+        self.reports = reports
 
 
 class StudyEvent:
