@@ -1,0 +1,7 @@
+pip install ics
+pip install datetime
+pip install flask
+pip install connexion
+pip install "connexion[flask]"
+pip install "connexion[uvicorn]"
+pip install "connexion[swagger-ui]"
