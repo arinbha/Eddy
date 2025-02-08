@@ -59,10 +59,18 @@ def user_next_event(user_id: int) -> StudyEvent:
     pass
 
 
+def get_reports_list() -> ReportList:
+    pass
+
+
+def get_study_spaces() -> StudySpaceList:
+    pass
+
+
 
 def search(availability: Availability_ListByDay, pref: Prefs, id: int, is_group: bool) -> StudySpaceList:
-    reports = ReportList
-    spaces = StudySpaceList
+    reports = get_reports_list()
+    spaces = get_study_spaces()
     spaces.update_status(reports)
 
     def find_zone_list(availability, query_start, query_end):
