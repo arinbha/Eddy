@@ -44,8 +44,13 @@ def user_next_event(user_id: int) -> StudyEvent:
     pass
 
 
+
 def search(availability: Availability_ListByDay, pref: Prefs, id: int, is_group: bool) -> StudySpaceList:
-    pass
+    reports = ReportList
+    spaces = StudySpaceList
+    for report in reports:
+        spaces.update_status(reports)
+    
 
 
 def book(study_event: StudyEvent, id, is_group) -> StudyEvent:

@@ -25,7 +25,6 @@ class StudySpace:
         return self.foot_traffic
     def get_crowdedness(self):
         return self.crowdedness
-
     def update_noise(self, noise):
         self.noise = noise
     def update_foottraffic(self, foot_traffic):
@@ -38,7 +37,8 @@ class StudySpaceList:
         self.study_spaces = []
     def add_studyspace(self, study_space):
         self.study_spaces.append(study_space)
-
+    def update_list(self, reports):
+        pass
 
 class User:
     def _init__(self, id, username, password):
@@ -58,6 +58,17 @@ class Prefs:
     def __init__(self):
         # TODO
         pass
+
+class RoomStatus:
+    def __init__(self):
+        # TODO
+        pass
+
+class ReportList:
+    def __init__(self):
+        # TODO
+        pass
+
 
 
 class StudyEvent:
