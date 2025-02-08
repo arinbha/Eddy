@@ -15,7 +15,7 @@ export const UploadButton = () => {
           e.target.files ? setCalendar(e.target.files[0]) : null
         }
       />
-      <Button type="submit" onSubmit={}>Upload Files</Button>
+      <Button type="submit">Upload Files</Button>
     </div>
   );
 };

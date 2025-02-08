@@ -14,6 +14,6 @@ export const calendarRouter = createTRPCRouter({
       }),
     )
     .mutation(({ ctx, input }) => {
-      await
+      
     }),
 });
