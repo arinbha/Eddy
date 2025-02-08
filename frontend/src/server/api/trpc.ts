@@ -34,7 +34,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
   // });
 
   const client = axios.create({
-    baseURL: 'https://some-domain.com/api/',
+    baseURL: 'https://4b62-128-237-82-211.ngrok-free.app/',
     timeout: 1000
   });
 
