@@ -2,6 +2,7 @@ import connexion
 from flask import jsonify
 
 from models import *
+from calprocessor import *
 
 
 def search():
@@ -30,171 +31,74 @@ def userId(userId):
     user = User(userId, "arinb", "dummy")
     return user.__dict__
 
+def userIdgroups(userId):
+    print("User ID group endpoint was triggered!")
+    group = Group(userId, [], [])
+    return group.__dict__
 
-def test3():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
+def userIdgroupsnew(userId):
+    print("User ID group new endpoint was triggered!")
+    prefs = Prefs(1, 10, 930, 1230, 3, 3, 3)
+    return prefs.__dict__
 
-def test4():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
+def userIdgroupsgroupId(userId, groupId):
+    print("User ID group groupId endpoint was triggered!")
+    prefs = Prefs(1, 10, 930, 1230, 3, 3, 3)
+    return prefs.__dict__
 
-def test5():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
+def userIdgroupsgroupIddelete(userId, groupId):
+    print("User ID group groupId delete endpoint was triggered!")
+    prefs = Prefs(1, 10, 930, 1230, 3, 3, 3)
+    return prefs.__dict__
 
-def test6():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
+def userIdgroupsjoin(userId):
+    print("User ID group join endpoint was triggered!")
+    prefs = Prefs(1, 10, 930, 1230, 3, 3, 3)
+    return prefs.__dict__
 
-def test7():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
+def userIdpostprefs(userId):
+    print("User ID post prefs endpoint was triggered!")
+    prefs = Prefs(1, 10, 930, 1230, 3, 3, 3)
+    return prefs.__dict__
 
-def test8():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
+def userIdgetprefs(userId):
+    print("User ID get prefs endpoint was triggered!")
+    prefs = Prefs(1, 10, 930, 1230, 3, 3, 3)
+    return prefs.__dict__
 
-def test9():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
+def userIdgetschedule(userId):
+    print("User ID get prefs endpoint was triggered!")
+    schedule = Schedule()
+    schedule.join(Event("AI").__dict__)
+    return schedule.__dict__
 
-def test10():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
+def userIdpostschedule(userId):
+    print("User ID post prefs endpoint was triggered!")
+    schedule = Schedule()
+    schedule.join(Event("AI").__dict__)
+    return schedule.__dict__
 
-def test11():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
+def userIdscheduleics(userId):
+    print("User ID schedule ics was triggered!")
+    return jsonify("ICS")
 
-def test12():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
+def userIdnextevent(userId):
+    print("User ID next event was triggered!")
+    class Test():
+        def __init__(self, start_time, end_time, location):
+            self.start_time = start_time
+            self.end_time = end_time
+            self.location = location
+    test = Test("09:30", "12:30", "Posner")
+    return test.__dict__
 
-def test13():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
+def book():
+    print("Book event was triggered!")
+    return jsonify("Book")
 
-def test14():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
-
-def test15():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
-
-def test16():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
-
-def test17():
-    print("Search endpoint was triggered!")
-    rooms = [
-        "GHC 6 Commons",
-        "GHC 7 Commons", 
-        "GHC 8 Conference Room",
-        "GHC Cafe",
-        "GHC Library"
-    ]
-    return jsonify(rooms)
+def update_status():
+    print("Update Status event was triggered!")
+    return jsonify("Update Status")
 
 app = connexion.App(__name__, specification_dir="../")
 app.add_api("openapi.yaml")

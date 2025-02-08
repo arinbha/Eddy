@@ -99,7 +99,7 @@ paths:
 
   /users/{userId}/groups:
     get:
-      operationId: flaskserver.test5
+      operationId: flaskserver.userIdgroups
       summary: Gets list of groups user is in
       responses:
         '200':
@@ -113,7 +113,7 @@ paths:
 
   /users/{userId}/groups/new:
     post:
-      operationId: flaskserver.test6
+      operationId: flaskserver.userIdgroupsnew
       summary: Creates a new group for the user
       requestBody:
         description: Preferences for new group
@@ -132,7 +132,7 @@ paths:
 
   /users/{userId}/groups/{groupId}:
     post:
-      operationId: flaskserver.test7
+      operationId: flaskserver.userIdgroupsgroupId
       summary: Updates preferences for the group
       requestBody:
         description: New preferences for the group
@@ -150,7 +150,7 @@ paths:
                 $ref: '#/components/schemas/Group'
 
     delete:
-      operationId: flaskserver.test8
+      operationId: flaskserver.userIdgroupsgroupIddelete
       summary: Removes user from group
       requestBody:
         description: The group to remove
@@ -164,7 +164,7 @@ paths:
 
   /users/{userId}/groups/join:
     post:
-      operationId: flaskserver.test9
+      operationId: flaskserver.userIdgroupsjoin
       summary: Adds user to a group
       requestBody:
         description: Group ID
@@ -181,7 +181,7 @@ paths:
 
   /user/{userId}/prefs:
     post:
-      operationId: flaskserver.test10
+      operationId: flaskserver.userIdpostprefs
       summary: Update user prefs
       requestBody:
         description: New Prefs
@@ -198,7 +198,7 @@ paths:
                 $ref: '#/components/schemas/Prefs'
 
     get:
-        operationId: flaskserver.test11
+        operationId: flaskserver.userIdgetprefs
         summary: Get user prefs
         responses:
           '200':
@@ -211,7 +211,7 @@ paths:
 
   /users/{userId}/schedule:
       get:
-          operationId: flaskserver.test12
+          operationId: flaskserver.userIdgetschedule
           summary: Get user schedule
           responses:
             '200':
@@ -222,7 +222,7 @@ paths:
                     $ref: '#/components/schemas/Schedule'
 
       post:
-          operationId: flaskserver.test13
+          operationId: flaskserver.userIdpostschedule
           summary: Update user schedule
           requestBody:
               description: New schedule
@@ -241,7 +241,7 @@ paths:
 
   /users/{userId}/schedule/ics:
       post:
-            operationId: flaskserver.test17
+            operationId: flaskserver.userIdscheduleics
             summary: Uploads an ICS file
             requestBody:
                 description: ICS file
@@ -256,7 +256,7 @@ paths:
 
   /users/{userId}/next_event:
         get:
-            operationId: flaskserver.test14
+            operationId: flaskserver.userIdnextevent
             summary: Gets next planned study event
             responses:
               '200':
@@ -281,7 +281,7 @@ paths:
                           example: "GHC 6 Commons"
   /book:
     post:
-        operationId: flaskserver.test15
+        operationId: flaskserver.book
         summary: Books a room
         requestBody:
             description: Room to book
@@ -321,7 +321,7 @@ paths:
 
   /update_status:
     post:
-        operationId: flaskserver.test16
+        operationId: flaskserver.update_status
         summary: Updates room status
         requestBody:
             description: Room to update
