@@ -11,7 +11,8 @@ zones = {"Ansys" : 1, "Scaife" : 1, "Scott" : 2, "Hammerschlag" : 2, "Wean" : 2,
 "Tepper" : 4, "Porter" : 5, "Baker" : 5, "CUC" : 6, "Maggie Mo" : 6, "Posner" : 6}
 
 places = {"Gates 6" : "Gates", "Gates 5" : "Gates", "Gates 4" : "Gates", "Gates 3" : "Gates", "Gates 2" : "Gates", 
-          "Gates 1" : "Gates", "Gates 7" : "Gates", "Baker 5" : "Baker", "Tepper 4" : "Tepper"}
+          "Gates 1" : "Gates", "Gates 7" : "Gates", "Baker 5" : "Baker", "Tepper 4" : "Tepper",
+          "Scaife 1" : "Scaife", "Baker 1" : "Baker", "Maggie Mo 1": "Maggie Mo", "Scott 5" : "Scott", "Newell 3" : "Newell"}
 
 class Schedule:
   def __init__(self):
