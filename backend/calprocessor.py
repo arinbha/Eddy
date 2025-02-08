@@ -6,7 +6,7 @@ start = 900
 end = 2100
 
 zones = {"Ansys" : 1, "Scaife" : 1, "Scott" : 2, "Hammerschlag" : 2, "Wean" : 2, "Doherty" : 2, "Gates" : 3, "Newell" : 3, 
-"Porter" : 4, "Baker" : 4, "CUC" : 5, "Maggie Mo" : 5, "Posner" : 5, "Tepper" : 6}
+"Tepper" : 4, "Porter" : 5, "Baker" : 5, "CUC" : 6, "Maggie Mo" : 6, "Posner" : 6}
 
 class Schedule:
   def __init__(self):

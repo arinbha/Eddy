@@ -1,7 +1,10 @@
+import json
+
 zones = {"Ansys" : 1, "Scaife" : 1, "Scott" : 2, "Hammerschlag" : 2, "Wean" : 2, "Doherty" : 2, "Gates" : 3, "Newell" : 3, 
-"Porter" : 4, "Baker" : 4, "CUC" : 5, "Maggie Mo" : 5, "Posner" : 5, "Tepper" : 6}
+"Tepper" : 4, "Porter" : 5, "Baker" : 5, "CUC" : 6, "Maggie Mo" : 6, "Posner" : 6}
 
 seating_type = {0: "Couches", 1 : "Tables", 2: "Both"}
+levels = {0: "Low", 1: "Medium", 2: "High"}
 
 class StudySpace:
     def __init__(self, location, seat, capacity, noise, foot_traffic, crowdedness):
@@ -24,7 +27,6 @@ class StudySpace:
         return self.foot_traffic
     def get_crowdedness(self):
         return self.crowdedness
-
     def update_noise(self, noise):
         self.noise = noise
     def update_foottraffic(self, foot_traffic):
@@ -37,13 +39,16 @@ class StudySpaceList:
         self.study_spaces = []
     def add_studyspace(self, study_space):
         self.study_spaces.append(study_space)
-
+    def update_list(self, reports):
+        pass
 
 class User:
-    def _init__(self, id, username, password):
+    def __init__(self, id, username, password):
         self.id = id
         self.username = username
         self.password = password
+    def to_json(self):
+        return json.dumps(self.__dict__)
 
 
 class Group:
@@ -54,9 +59,26 @@ class Group:
 
 
 class Prefs:
-    def __init__(self):
-        # TODO
-        pass
+    def __init__(self, seating_type, size, start_time, end_time, noise, foot_traffic, crowdedness):
+        self.seating_type = seating_type
+        self.size = size
+        self.start_time = start_time
+        self.end_time = end_time
+        self.noise = noise
+        self.foot_traffic = foot_traffic
+        self.crowdedness = crowdedness
+
+class RoomStatus:
+    def __init__(self, study_space, ppl_count, noise, foot_traffic, crowdedness):
+        self.study_space = study_space
+        self.ppl_count = ppl_count
+        self.noise = noise
+        self.foot_traffic = foot_traffic
+        self.crowdedness = crowdedness
+
+class ReportList:
+    def __init__(self, reports: list[tuple[int, RoomStatus]]):
+        self.reports = reports
 
 
 class StudyEvent:
@@ -64,6 +86,14 @@ class StudyEvent:
         self.location = location
         self.start_time = start_time
         self.end_time = end_time
+
+class Availability_Map:
+    def __init__(self, availability):
+        self.availability = availability
+
+class Availability_ListByDay:
+    def __init__(self, dailyfree):
+        self.dailyfree = dailyfree
 
 
 Gates_6 = StudySpace("Gates", 2, 20, "Loud", "High", "High")

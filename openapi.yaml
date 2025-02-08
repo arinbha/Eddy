@@ -2,10 +2,40 @@ openapi: 3.0.3
 info:
   title: Eddy API
   version: 1.0.0
+
 paths:
-  # TODO - add paths
+  /search:
+    get:
+      operationId: flaskserver.search
+      summary: Search for study rooms
+      parameters:
+        - in: query
+          name: prefs
+          schema:
+            type: object
+            properties:
+              prefs:
+                $ref: '#/components/schemas/Prefs'
+              id:
+                type: integer
+                format: int64
+                example: 10
+              is_group:
+                type: boolean
+                example: false
+      responses:
+        '200':
+          description: Returns list of rooms
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  example: "GHC 6 Commons"
   /login:
     post:
+      operationId: flaskserver.login
       summary: Logs in and returns user object
       requestBody:
         description: username/pass
@@ -31,6 +61,7 @@ paths:
 
   /newuser:
     post:
+      operationId: flaskserver.newuser
       summary: Creates new user
       requestBody:
         description: username/pass
@@ -56,6 +87,7 @@ paths:
 
   /users/{userId}:
     get:
+      operationId: flaskserver.userId
       summary: Gets the current user
       responses:
         '200':
@@ -67,6 +99,7 @@ paths:
 
   /users/{userId}/groups:
     get:
+      operationId: flaskserver.userIdgroups
       summary: Gets list of groups user is in
       responses:
         '200':
@@ -80,6 +113,7 @@ paths:
 
   /users/{userId}/groups/new:
     post:
+      operationId: flaskserver.userIdgroupsnew
       summary: Creates a new group for the user
       requestBody:
         description: Preferences for new group
@@ -98,6 +132,7 @@ paths:
 
   /users/{userId}/groups/{groupId}:
     post:
+      operationId: flaskserver.userIdgroupsgroupId
       summary: Updates preferences for the group
       requestBody:
         description: New preferences for the group
@@ -115,6 +150,7 @@ paths:
                 $ref: '#/components/schemas/Group'
 
     delete:
+      operationId: flaskserver.userIdgroupsgroupIddelete
       summary: Removes user from group
       requestBody:
         description: The group to remove
@@ -128,6 +164,7 @@ paths:
 
   /users/{userId}/groups/join:
     post:
+      operationId: flaskserver.userIdgroupsjoin
       summary: Adds user to a group
       requestBody:
         description: Group ID
@@ -144,6 +181,7 @@ paths:
 
   /user/{userId}/prefs:
     post:
+      operationId: flaskserver.userIdpostprefs
       summary: Update user prefs
       requestBody:
         description: New Prefs
@@ -160,6 +198,7 @@ paths:
                 $ref: '#/components/schemas/Prefs'
 
     get:
+        operationId: flaskserver.userIdgetprefs
         summary: Get user prefs
         responses:
           '200':
@@ -172,6 +211,7 @@ paths:
 
   /users/{userId}/schedule:
       get:
+          operationId: flaskserver.userIdgetschedule
           summary: Get user schedule
           responses:
             '200':
@@ -182,6 +222,7 @@ paths:
                     $ref: '#/components/schemas/Schedule'
 
       post:
+          operationId: flaskserver.userIdpostschedule
           summary: Update user schedule
           requestBody:
               description: New schedule
@@ -198,8 +239,24 @@ paths:
                       $ref: '#/components/schemas/Schedule'
 
 
+  /users/{userId}/schedule/ics:
+      post:
+            operationId: flaskserver.userIdscheduleics
+            summary: Uploads an ICS file
+            requestBody:
+                description: ICS file
+                content:
+                    application/json:
+                      schema:
+                        type: string
+                        example: "ICS file"
+            responses:
+                '200':
+                    description: Returns success
+
   /users/{userId}/next_event:
         get:
+            operationId: flaskserver.userIdnextevent
             summary: Gets next planned study event
             responses:
               '200':
@@ -222,40 +279,9 @@ paths:
                         location:
                           type: string
                           example: "GHC 6 Commons"
-
-
-  /search:
-    get:
-        summary: Search for study rooms
-        parameters:
-          - in: query
-            name: prefs
-            schema:
-              type: object
-              properties:
-                prefs:
-                  $ref: '#/components/schemas/Prefs'
-                id:
-                  type: integer
-                  format: int64
-                  example: 10
-                is_group:
-                  type: boolean
-                  example: false
-        responses:
-            '200':
-                description: Returns list of rooms
-                content:
-                  application/json:
-                    schema:
-                      type: array
-                      items:
-                          type: string
-                          example: "GHC 6 Commons"
-
-
   /book:
     post:
+        operationId: flaskserver.book
         summary: Books a room
         requestBody:
             description: Room to book
@@ -295,6 +321,7 @@ paths:
 
   /update_status:
     post:
+        operationId: flaskserver.update_status
         summary: Updates room status
         requestBody:
             description: Room to update
@@ -364,12 +391,35 @@ components:
           format: int64
           example: 17
 
-        # TODO Room Prefs
+        size:
+            type: integer
+            example: 4
+
+        seating_type:
+            type: integer
+            description: 0/1 for couch/table, 2 for both
+            example: 1
+
+        noise:
+            type: integer
+            description: 0/1/2 for no/med/high preference
+            example: 2
+
+        foot_traffic:
+            type: integer
+            description: 0/1/2 for no/med/high preference
+            example: 1
+
+        crowd:
+            type: integer
+            description: 0/1/2 for no/med/high preference
+            example: 1
 
     RoomStatus:
       type: object
       properties:
-        # TODO
+        open:
+          type: boolean
 
     Location:
       type: string
