@@ -153,6 +153,8 @@ components:
           type: integer
           format: int64
           example: 10
+        username:
+          type: string
         preferences:
           $ref: '#/components/schemas/Prefs'
 
