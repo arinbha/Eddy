@@ -26,7 +26,6 @@ export const roomsRouter = createTRPCRouter({
 
     const result = await schema.safeParseAsync(res.data);
 
-    if (result.success) 
-      return result.data;
+    if (result.success) return result.data;
   }),
 });

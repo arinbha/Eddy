@@ -8,7 +8,8 @@ import { UploadButton } from "../_components/upload";
 
 export default async function Home() {
   const session = await auth();
-  const spaces = await api.room.search()
+  const spaces = await api.room.search({ prefs: "study" });
+  const schedule = await api.calendar.get();
 
   if (!session) {
     redirect("/");
@@ -23,7 +24,7 @@ export default async function Home() {
             <Link className="p-2" href="/group">
               Groups
             </Link>
-            <Link className="p-2" href="/settings">
+            <Link className="p-2" href="/home">
               Settings
             </Link>
             <Link className="p-2" href="/api/auth/signout">
@@ -35,20 +36,17 @@ export default async function Home() {
           <div>
             <div className="flex flex-row">
               <Input placeholder="Search spaces" />
-              <Button type="submit">
-                Search
-              </Button>
+              <Button type="submit">Search</Button>
             </div>
             <table>
-            {
-              spaces?.map((val, idx) => (
-                <li key={idx}>{val}</li>
-              ))
-            }
+              <tbody>
+                {spaces?.map((val, idx) => <li key={idx}>{val}</li>)}
+              </tbody>
             </table>
           </div>
           <div>
-            <UploadButton />
+            {!schedule && <UploadButton />}
+            {schedule && <div></div>}
           </div>
         </div>
         <footer className="flex flex-row justify-between bg-gradient-to-b from-[#7148ab] to-[#15162c] p-2">
