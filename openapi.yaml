@@ -239,6 +239,21 @@ paths:
                       $ref: '#/components/schemas/Schedule'
 
 
+  /users/{userId}/schedule/ics:
+      post:
+            operationId: flaskserver.test17
+            summary: Uploads an ICS file
+            requestBody:
+                description: ICS file
+                content:
+                    application/json:
+                      schema:
+                        type: string
+                        example: "ICS file"
+            responses:
+                '200':
+                    description: Returns success
+
   /users/{userId}/next_event:
         get:
             operationId: flaskserver.test14
@@ -376,7 +391,29 @@ components:
           format: int64
           example: 17
 
-        # TODO Room Prefs
+        size:
+            type: integer
+            example: 4
+
+        seating_type:
+            type: integer
+            description: 0/1 for couch/table, 2 for both
+            example: 1
+
+        noise:
+            type: integer
+            description: 0/1/2 for no/med/high preference
+            example: 2
+
+        foot_traffic:
+            type: integer
+            description: 0/1/2 for no/med/high preference
+            example: 1
+
+        crowd:
+            type: integer
+            description: 0/1/2 for no/med/high preference
+            example: 1
 
     RoomStatus:
       type: object
