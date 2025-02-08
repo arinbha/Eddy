@@ -142,6 +142,32 @@ paths:
           description: Successful add
 
 
+  /user/{userId}/prefs:
+    post:
+      summary: Update user prefs
+      requestBody:
+        description: New Prefs
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Prefs'
+      responses:
+        '200':
+          description: Returns new prefs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Prefs'
+
+    get:
+        summary: Get user prefs
+        responses:
+          '200':
+            description: Returns user prefs
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Prefs'
 
 
 components:
@@ -189,6 +215,11 @@ components:
           example: 17
 
         # TODO Room Prefs
+
+    RoomStatus:
+      type: object
+      properties:
+        # TODO
 
     Location:
       type: string
