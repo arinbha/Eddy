@@ -231,7 +231,17 @@ paths:
           - in: query
             name: prefs
             schema:
-              $ref: '#/components/schemas/Prefs'
+              type: object
+              properties:
+                prefs:
+                  $ref: '#/components/schemas/Prefs'
+                id:
+                  type: integer
+                  format: int64
+                  example: 10
+                is_group:
+                  type: boolean
+                  example: false
         responses:
             '200':
                 description: Returns list of rooms
@@ -264,6 +274,16 @@ paths:
                     is_group:
                       type: boolean
                       example: false
+                    start_time:
+                      type: string
+                      description: 24 hour HH:MM time
+                      pattern: '\d\d:\d\d'
+                      example: '09:30'
+                    end_time:
+                      type: string
+                      description: 24 hour HH:MM time
+                      pattern: '\d\d:\d\d'
+                      example: '16:30'
         responses:
             '200':
                 description: Returns success

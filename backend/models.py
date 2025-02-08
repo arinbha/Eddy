@@ -40,15 +40,30 @@ class StudySpaceList:
 
 
 class User:
-    def _init__(self, username, password):
+    def _init__(self, id, username, password):
+        self.id = id
         self.username = username
         self.password = password
-    def reset_password(self, password):
-        self.password = password
 
-class UserList:
+
+class Group:
+    def __init__(self, id, user_list, prefs):
+        self.id = id
+        self.user_list = user_list
+        self.prefs = prefs
+
+
+class Prefs:
     def __init__(self):
-        self.user_list = []
- 
+        # TODO
+        pass
+
+
+class StudyEvent:
+    def __init__(self, location, start_time, end_time):
+        self.location = location
+        self.start_time = start_time
+        self.end_time = end_time
+
 
 Gates_6 = StudySpace("Gates", 2, 20, "Loud", "High", "High")
