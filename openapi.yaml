@@ -4,6 +4,67 @@ info:
   version: 1.0.0
 paths:
   # TODO - add paths
+  /login:
+    post:
+      summary: Logs in and returns user object
+      requestBody:
+        description: username/pass
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: User object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+        401:
+          description: Bad Login
+
+  /newuser:
+    post:
+      summary: Creates new user
+      requestBody:
+        description: username/pass
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+
+      responses:
+        200:
+          description: User object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+
+
+  /users/{userId}:
+    get:
+      summary: Gets the current user
+      responses:
+        '200':
+          description: Returns the current user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
   /users/{userId}/groups:
     get:
       summary: Gets list of groups user is in
