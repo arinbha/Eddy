@@ -170,6 +170,136 @@ paths:
                   $ref: '#/components/schemas/Prefs'
 
 
+  /users/{userId}/schedule:
+      get:
+          summary: Get user schedule
+          responses:
+            '200':
+              description: Returns user schedule
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Schedule'
+
+      post:
+          summary: Update user schedule
+          requestBody:
+              description: New schedule
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Schedule'
+          responses:
+              '200':
+                description: Returns new schedule
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/Schedule'
+
+
+  /users/{userId}/next_event:
+        get:
+            summary: Gets next planned study event
+            responses:
+              '200':
+                description: Returns next study event
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        start_time:
+                          type: string
+                          description: 24 hour HH:MM time
+                          pattern: '\d\d:\d\d'
+                          example: '09:30'
+                        end_time:
+                          type: string
+                          description: 24 hour HH:MM time
+                          pattern: '\d\d:\d\d'
+                          example: '16:30'
+                        location:
+                          type: string
+                          example: "GHC 6 Commons"
+
+
+  /search:
+    get:
+        summary: Search for study rooms
+        parameters:
+          - in: query
+            name: prefs
+            schema:
+              $ref: '#/components/schemas/Prefs'
+        responses:
+            '200':
+                description: Returns list of rooms
+                content:
+                  application/json:
+                    schema:
+                      type: array
+                      items:
+                          type: string
+                          example: "GHC 6 Commons"
+
+
+  /book:
+    post:
+        summary: Books a room
+        requestBody:
+            description: Room to book
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    room:
+                      type: string
+                      example: "GHC 6 Commons"
+                    id:
+                      type: integer
+                      format: int64
+                      example: 10
+                    is_group:
+                      type: boolean
+                      example: false
+        responses:
+            '200':
+                description: Returns success
+                content:
+                  application/json:
+                    schema:
+                      type: string
+                      example: "Success"
+
+  /update_status:
+    post:
+        summary: Updates room status
+        requestBody:
+            description: Room to update
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    room:
+                      type: string
+                      example: "GHC 6 Commons"
+                    status:
+                      $ref: '#/components/schemas/RoomStatus'
+        responses:
+            '200':
+                description: Returns success
+                content:
+                  application/json:
+                    schema:
+                      type: string
+                      example: "Success"
+
+
+
+
 components:
   schemas:
     User:
