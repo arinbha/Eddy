@@ -12,5 +12,30 @@ class StudySpace:
         self.noise = noise
         self.foot_traffic = foot_traffic
         self.crowdedness = crowdedness
+    def get_noise(self):
+        return self.location
+    def get_seatingtype(self):
+        return self.seating_type
+    def get_capacity(self):
+        return self.capacity
+    def get_noise(self):
+        return self.noise
+    def get_foottraffic(self):
+        return self.foot_traffic
+    def get_crowdedness(self):
+        return self.crowdedness
+
+    def update_noise(self, noise):
+        self.noise = noise
+    def update_foottraffic(self, foot_traffic):
+        self.foot_traffic = foot_traffic
+    def update_crowdedness(self, crowdedness):
+        self.crowdedness = crowdedness
+
+class StudySpaceList:
+    def __init__(self):
+        self.study_spaces = []
+    def add_studyspace(self, study_space):
+        self.study_spaces.append(study_space)
 
 Gates_6 = StudySpace("Gates", 2, 20, "Loud", "High", "High")
